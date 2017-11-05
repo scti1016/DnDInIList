@@ -5,9 +5,7 @@ class Character{
         this.name = name;
         this.initiative = initiative;
 
-
     }
-
 }
 
 module.exports = Character;

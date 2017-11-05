@@ -12,7 +12,7 @@ class CharacterList{
     }
 
     sortInitiative(){
-        this.list = this.list.sort(a, b => {
+        this.list = this.list.sort((a, b) => {
             return (b.initiative - a.initiative);
         });
         return this.list;

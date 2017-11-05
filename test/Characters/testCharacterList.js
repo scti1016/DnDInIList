@@ -1,7 +1,7 @@
+'use strict';
 const assert = require('assert');
 const CharacterList = require('../../src/Characters/CharacterList');
 const Character = require('../../src/Characters/Character');
-
 
 describe('CharacterList', () => {
     it('should instantiate a new characterList', () => {
@@ -17,10 +17,16 @@ describe('CharacterList', () => {
         cList.addCharacter(new Character('c', -3));
         cList.addCharacter(new Character('d', 99));
 
-        cList.list.forEach(character, index, arr => {
-            if (index < arr.length){
-                assert.ok(character.initiative > arr[index+1].initiative);
+        cList.sortInitiative();
+        let visited = 0;
+        cList.list.forEach((character, index, arr) => {
+            if (index+1 <= arr.length){
+                if(arr[index+1]!= null) {
+                    assert.ok(character.initiative >= arr[index + 1].initiative);
+                }
+                visited++;
             }
         });
+        assert(visited === cList.list.length);
     });
 });

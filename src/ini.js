@@ -1,16 +1,20 @@
 Character = require('./Characters/Character');
-angular.module('ini', [])
-    .controller('_controller', () => {
-        const list = [];
+CharacterList = require('./Characters/CharacterList');
 
-        list.push(new Character('1',1));
-        list.push(new Character('2',2));
-        list.push(new Character('3',3));
+angular.module('app', [])
+    .controller('controller', function($scope) {
+        let list = this;
 
-       const getCharList = () =>{
-            return list;
-        }
+        $scope.name = 'abc';
 
+        list.addCharacter(new Character('1',1));
+        list.addCharacter(new Character('2',2));
+        list.addCharacter(new Character('3',3));
+
+        list.func = () => {
+
+            return 'abc';
+        };
 
 
     });
