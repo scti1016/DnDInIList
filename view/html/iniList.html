@@ -1,0 +1,21 @@
+<div class="container-fluid" ng-controller="IniListController as inilistController">
+    <table class="table table-responsive table-hover">
+        <thead>
+        <tr>
+            <th ng-repeat="header in inilistController.inilist.getTableHeader()">{{header}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="character in inilistController.inilist.getCharacterList().getCharacterArray()">
+            <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
+                {{character.name}}</td>
+            <td class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                <input type=text class="form-control" ng-model="character.hp" name="fname">
+            </td>
+            <td class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+                <input type="text" class="form-control" ng-model="character.statusString"  name="fname">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

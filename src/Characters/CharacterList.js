@@ -1,8 +1,12 @@
 'use strict';
 
 class CharacterList{
-    constructor(name, initiative){
+    constructor(){
         this.list = [];
+    }
+
+    getCharacterArray(){
+        return this.list;
     }
 
     addCharacter(character){
@@ -17,7 +21,6 @@ class CharacterList{
         });
         return this.list;
     }
-
 }
 
 module.exports = CharacterList;
