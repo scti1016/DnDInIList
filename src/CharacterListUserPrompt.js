@@ -4,8 +4,9 @@ const Character = require('./Characters/Character');
 
 class CharacterListUserPrompt{
 
-    constructor(insertDefaultCharacters){
+    constructor($scope, insertDefaultCharacters ){
 
+        this.$scope = $scope;
         this.characterList = new CharacterList();
         if (insertDefaultCharacters){
             // insert default here... load from filesystem
@@ -17,6 +18,10 @@ class CharacterListUserPrompt{
 
     getCurrentCharacter(){
         return this.currentCharacter;
+    }
+
+    getGeneratedCharacterList(){
+        return this.characterList;
     }
 
     isFormValid(){
@@ -38,10 +43,8 @@ class CharacterListUserPrompt{
         if (this.isFormValid()) {
             this.next();
             this.characterList.sortInitiative();
-            return this.characterList;
-            //Emit event ?
+            this.$scope.$emit('fight', this.characterList);
         }
-
     }
 }
 

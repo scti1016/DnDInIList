@@ -12,11 +12,11 @@
 </head>
 <body ng-controller="iniListMainController as mainController">
 
-<div ng-if="mainController.inilist.isEncounterStarted()">
+<div ng-if="isEncounterStarted">
     <ng-include src="'iniList.html'" ></ng-include>
 </div>
 
-<div ng-if="!mainController.inilist.isEncounterStarted()">
+<div ng-if="!isEncounterStarted">
     <ng-include src="'encounterForm.html'"></ng-include>
 </div>
 

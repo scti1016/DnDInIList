@@ -10,12 +10,16 @@
             <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
                 {{character.name}}</td>
             <td class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                <input type=text class="form-control" ng-model="character.hp" name="fname">
+                <input type=text class="form-control" ng-model="character.hp" name="a">
             </td>
             <td class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
-                <input type="text" class="form-control" ng-model="character.statusString"  name="fname">
+                <input type="text" class="form-control" ng-model="character.statusString"  name="b">
             </td>
         </tr>
         </tbody>
     </table>
+    <form class="form-group">
+        <button type="submit" ng-click="nextCharacter()" class="btn btn-primary">Next</button>
+        <button type="submit" ng-click="finishFight()" class="btn btn-primary">finishFight</button>
+    </form>
 </div>
