@@ -8,16 +8,19 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 
     <meta charset="UTF-8">
-    <title>IniList for advanced Dungeons&Dragons V3.5</title>
+    <title>IniList for Dungeons&Dragoons V3.5</title>
 </head>
-<body ng-controller="iniListMainController as mainController">
+<body>
 
-<div ng-if="isEncounterStarted">
-    <ng-include src="'iniList.html'" ></ng-include>
-</div>
+<div class="ng-scope" ng-controller="iniListMainController as mainController">
 
-<div ng-if="!isEncounterStarted">
-    <ng-include src="'encounterForm.html'"></ng-include>
+    <div ng-show="mainController.encounterStarted">
+        <ng-include src="'iniList.html'" ></ng-include>
+    </div>
+
+    <div ng-hide="mainController.encounterStarted">
+        <ng-include src="'encounterForm.html'"></ng-include>
+    </div>
 </div>
 
 </body>

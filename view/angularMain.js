@@ -9,42 +9,39 @@ require('angular-ui-bootstrap');
 let angularApp =  angular.module('app', [AngularRoute, 'ui.bootstrap']);
 
 angularApp.controller('iniListMainController',['$scope', function($scope) {
-    this.inilist = new IniList();
+    this.encounterStarted = false;
 
     $scope.$on('fight', (event, ...args) =>{
-        this.inilist.encounterStarted = true;
+        this.encounterStarted = true;
         $scope.$broadcast('characters', args);
     });
 
-    $scope.$on('fightEnd', (event, ...args) =>{
-        this.inilist.encounterStarted = false;
+    $scope.$on('fightEnd', (event) =>{
+        this.encounterStarted = false;
+        $scope.$broadcast('startNewList');
     });
 
 }]);
 
 angularApp.controller('encounterListController',['$scope', function($scope) {
     this.userPrompt = new CharacterListUserPrompt($scope, false);
+
+    $scope.$on('startNewList', (event) =>{
+        this.userPrompt = new CharacterListUserPrompt($scope);
+    });
+
 }]);
 
 angularApp.controller('IniListController',['$scope', function($scope) {
 
-    this.inilist = new IniList();
-    $scope.$on('characters', (event, ...args) =>{
-        this.inilist.getCharacterList().list = args;
-        console.log(args);
+    this.inilist = new IniList($scope);
+
+    $scope.$on('characters', (event, characterlistAsArgs) =>{
+        this.inilist.getCharacterList().list = characterlistAsArgs[0];
+        this.encounterStarted = true;
+        this.inilist.setCurrentTurnChracter(this.inilist.getCharacterList().list[0]);
     });
 
-
-
-
-    // //Mock Sample Data
-    this.inilist.getCharacterList().addCharacter(new Character('GuyA',3,'99','liegt #3 verflucht'));
-    // this.inilist.getCharacterList().addCharacter(new Character('GuyB',20,'20','#5 zauber fliegen '));
-    // this.inilist.getCharacterList().addCharacter(new Character('GuyC',-1,'-1','bewusstlos'));
-    // this.inilist.getCharacterList().addCharacter(new Character('GuyD',33,'13',));
-    // //
-    //
-    // this.inilist.getCharacterList().sortInitiative();
-
+     this.inilist.getCharacterList().sortInitiative();
 }]);
 

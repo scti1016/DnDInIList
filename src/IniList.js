@@ -26,14 +26,37 @@ class IniList{
         return this.currentTurnCharacter;
     }
 
-    isEncounterStarted(){
-        return this.encounterStarted;
-    }
     nextCharacter(){
+        let i = this.getCharacterList().list.indexOf(this.getCurrentTurnChracter());
+        if (i+1 === this.getCharacterList().list.length){
+            i = 0;
+        }else {i+=1;}
+        this.setCurrentTurnChracter(this.characterList.list[i]);
+        this.decrementValues(this.getCurrentTurnChracter());
 
     }
+    decrementValues(currChar){
+        let statusText = currChar.statusString;
+        const numbersToDecrement = statusText.match(/#-*[0-9]+/g);
+        let decrementedNumbers = [];
+        let numberPositions = [];
+        for (let number of numbersToDecrement){
+           numberPositions.push(statusText.indexOf(number));
+        }
+        for (let numberString of numbersToDecrement){
+            numberString = numberString.substring(1);
+            let decrementedNumber = ((parseInt(numberString))-1);
+            decrementedNumber = '#'+decrementedNumber;
+            decrementedNumbers.push(decrementedNumber)
+        }
+
+        decrementedNumbers.forEach( (decrementedNumber, i) =>{
+           statusText = statusText.replace(numbersToDecrement[i], decrementedNumber);
+        });
+        this.getCurrentTurnChracter().statusString = statusText;
+    }
+
     finishFight(){
-        console.log('finish');
         this.$scope.$emit('fightEnd');
     }
 }

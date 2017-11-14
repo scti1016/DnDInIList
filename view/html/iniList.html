@@ -1,25 +1,30 @@
 <div class="container-fluid" ng-controller="IniListController as inilistController">
-    <table class="table table-responsive table-hover">
-        <thead>
-        <tr>
-            <th ng-repeat="header in inilistController.inilist.getTableHeader()">{{header}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="character in inilistController.inilist.getCharacterList().getCharacterArray()">
-            <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
-                {{character.name}}</td>
-            <td class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                <input type=text class="form-control" ng-model="character.hp" name="a">
-            </td>
-            <td class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
-                <input type="text" class="form-control" ng-model="character.statusString"  name="b">
-            </td>
-        </tr>
-        </tbody>
-    </table>
     <form class="form-group">
-        <button type="submit" ng-click="nextCharacter()" class="btn btn-primary">Next</button>
-        <button type="submit" ng-click="finishFight()" class="btn btn-primary">finishFight</button>
+        <table class="table table-responsive table-hover" ng-init="inilistController.inilist.initFight()">
+            <thead>
+            <tr>
+                <th ng-repeat="header in inilistController.inilist.getTableHeader()">{{header}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="character in inilistController.inilist.getCharacterList().getCharacterArray()"
+                ng-class="{success: inilistController.inilist.getCurrentTurnChracter() == character}">
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
+                    {{character.name}}</td>
+                <td class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                    <input type=text class="form-control" ng-model="character.hp" name="a">
+                </td>
+                <td class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+                    <input type="text" class="form-control" ng-model="character.statusString"  name="b">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="container-fluid">
+
+            <button type="submit" ng-click="inilistController.inilist.nextCharacter()" autofocus class="btn btn-success">Next</button>
+            <button type="button" ng-click="inilistController.inilist.finishFight()" class="btn btn-danger">End Fight</button>
+
+        </div>
     </form>
 </div>

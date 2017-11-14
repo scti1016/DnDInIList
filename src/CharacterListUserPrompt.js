@@ -12,7 +12,7 @@ class CharacterListUserPrompt{
             // insert default here... load from filesystem
         }
         this.currentCharacter = new Character();
-        this.defaultName = "Villain_Name";
+        this.defaultName = "Name";
         this.iniPromptPlaceHolder = "Initiative";
     }
 
@@ -31,6 +31,10 @@ class CharacterListUserPrompt{
             this.currentCharacter.initiative === 0 ))
     }
 
+    isFinishValid(){
+        return (this.characterList.list.length > 0);
+    }
+
     next(){
         if (this.isFormValid()) {
             this.characterList.addCharacter(this.currentCharacter);
@@ -40,10 +44,9 @@ class CharacterListUserPrompt{
     }
 
     finish(){
-        if (this.isFormValid()) {
-            this.next();
+        if (this.isFinishValid()) {
             this.characterList.sortInitiative();
-            this.$scope.$emit('fight', this.characterList);
+            this.$scope.$emit('fight', this.characterList.list);
         }
     }
 }
