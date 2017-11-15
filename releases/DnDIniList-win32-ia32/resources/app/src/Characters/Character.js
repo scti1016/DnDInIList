@@ -6,6 +6,7 @@ class Character{
         this.initiative = initiative;
         this.hp = hp;
         this.statusString = statusString;
+        this.selected = false;
     }
 }
 

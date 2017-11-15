@@ -10,12 +10,10 @@
   "keywords": [
     "Electron",
     "dnd"
-
   ],
   "author": "",
   "license": "",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "angular": "^1.6.6",
     "bootstrap": "^3.3.7",

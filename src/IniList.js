@@ -26,6 +26,70 @@ class IniList{
         return this.currentTurnCharacter;
     }
 
+
+    charUp(){
+        const char = this.characterList.list.find((e)=>{
+            if (e.selected) return true;
+            else return false;
+        });
+        if(this.characterList.list.length === 1)return;
+        const indexchar = this.characterList.list.indexOf(char);
+
+
+        if(this.characterList.list[indexchar -1] != undefined){
+            const tmpCharacter = this.characterList.list[indexchar -1];
+            this.characterList.list[indexchar -1] = char;
+            this.characterList.list[indexchar] = tmpCharacter;
+
+        }
+    }
+
+    chardown(){
+        const char = this.characterList.list.find((e)=>{
+            if (e.selected) return true;
+            else return false;
+        });
+        if(this.characterList.list.length === 1)return;
+        const indexchar = this.characterList.list.indexOf(char);
+        if(this.characterList.list[indexchar +1] != undefined){
+
+            const tmpCharacter = this.characterList.list[indexchar +1];
+            this.characterList.list[indexchar +1] = char;
+            this.characterList.list[indexchar] = tmpCharacter;
+
+        }
+    }
+
+    movecharacter($event){
+        //console.log('on event' + $event);
+        console.log($event);
+        if($event.key==='ArrowUp')
+        {
+
+            this.charUp()
+        }
+        if($event.key==='ArrowDown')
+        {
+            this.chardown()
+        }
+
+    }
+
+    selectCharacter(chacarter){
+        const oldselected = this.characterList.list.find((e)=>{
+            if (e.selected) return true;
+            else return false;
+        });
+        if(oldselected) {
+            console.log('oldselected= ' + oldselected);
+            oldselected.selected = false;
+        }
+
+        chacarter.selected = true;
+        console.log(chacarter.name +' selected');
+
+    }
+
     nextCharacter(){
         let i = this.getCharacterList().list.indexOf(this.getCurrentTurnChracter());
         if (i+1 === this.getCharacterList().list.length){
