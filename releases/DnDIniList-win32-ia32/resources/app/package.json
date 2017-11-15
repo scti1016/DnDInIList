@@ -1,0 +1,24 @@
+{
+  "name": "DnDIniList",
+  "version": "1.0.0",
+  "description": "DnD",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "dnd"
+
+  ],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "angular": "^1.6.6",
+    "bootstrap": "^3.3.7",
+    "electron": "^1.7.9"
+  }
+}

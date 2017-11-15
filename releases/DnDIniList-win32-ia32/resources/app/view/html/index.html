@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+    <script> const Angular = require('angular')</script>
+    <script> const Ini =  require('../angularMain')</script>
+
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <meta charset="UTF-8">
+    <title>IniList for Dungeons&Dragoons V3.5</title>
+</head>
+<body>
+
+<div class="ng-scope" ng-controller="iniListMainController as mainController">
+
+    <div ng-show="mainController.encounterStarted">
+        <ng-include src="'iniList.html'" ></ng-include>
+    </div>
+
+    <div ng-hide="mainController.encounterStarted">
+        <ng-include src="'encounterForm.html'"></ng-include>
+    </div>
+</div>
+
+</body>
+</html>

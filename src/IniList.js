@@ -37,7 +37,9 @@ class IniList{
     }
     decrementValues(currChar){
         let statusText = currChar.statusString;
+        if (statusText == null) return;
         const numbersToDecrement = statusText.match(/#-*[0-9]+/g);
+        if (numbersToDecrement == null) return;
         let decrementedNumbers = [];
         let numberPositions = [];
         for (let number of numbersToDecrement){

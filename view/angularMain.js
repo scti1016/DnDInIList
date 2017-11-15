@@ -1,12 +1,8 @@
-const AngularRoute = require('angular-route');
-const CharacterList = require('../src/Characters/CharacterList');
-const Character = require('../src/Characters/Character');
 const IniList = require('../src/IniList');
 const CharacterListUserPrompt = require('../src/CharacterListUserPrompt');
-require('angular-ui-bootstrap');
 
 
-let angularApp =  angular.module('app', [AngularRoute, 'ui.bootstrap']);
+let angularApp =  angular.module('app' ,[]);
 
 angularApp.controller('iniListMainController',['$scope', function($scope) {
     this.encounterStarted = false;
