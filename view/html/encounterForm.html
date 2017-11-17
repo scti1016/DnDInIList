@@ -13,7 +13,8 @@
                    ng-model="encounterListControl.userPrompt.getCurrentCharacter().initiative">
             </input>
 
-            <button type="submit" onclick="document.getElementById('xname').focus()" ng-click="encounterListControl.userPrompt.next()"
+            <button type="submit" onclick="document.getElementById('xname').focus()"
+                    ng-click="encounterListControl.userPrompt.next()"
                     ng-disabled="!encounterListControl.userPrompt.isFormValid()"
                     class="btn btn-primary">Next</button>
 

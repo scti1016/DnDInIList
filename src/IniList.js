@@ -1,13 +1,25 @@
 const CharacterList = require('./Characters/CharacterList');
+const Character = require('./Characters/Character');
 
 class IniList{
 
     constructor($scope){
         this.$scope = $scope;
         this.characterList = new CharacterList();
-        this.tableheader = {Character:'Character',HP:'HP',Status:'Status'};
+        this.tableheader = {Character:'Character',HP:'HP',Status:'Status',Delete:'Delete'};
         this.currentTurnCharacter = undefined;
         this.encounterStarted = false;
+
+        this.newCharacterName = '';
+        this.newCharacterIni = undefined;
+    }
+
+    addCharacter(){
+
+        this.characterList.list.unshift(new Character(this.newCharacterName, this.newCharacterIni) );
+        this.newCharacterName = '';
+        this.newCharacterIni = undefined;
+
     }
 
     getCharacterList(){
@@ -26,6 +38,11 @@ class IniList{
         return this.currentTurnCharacter;
     }
 
+    remove(character){
+        const index = this.characterList.list.indexOf(character);
+        this.characterList.list.splice(index,1);
+
+    }
 
     charUp(){
         const char = this.characterList.list.find((e)=>{
