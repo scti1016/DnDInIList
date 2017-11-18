@@ -6,7 +6,7 @@ class IniList{
     constructor($scope){
         this.$scope = $scope;
         this.characterList = new CharacterList();
-        this.tableheader = {Character:'Character',HP:'HP',Status:'Status',Delete:'Delete'};
+        this.tableheader = {Character:'Character',Ini:'Ini',HP:'HP',Status:'Status',Delete:'Delete'};
         this.currentTurnCharacter = undefined;
         this.encounterStarted = false;
 
@@ -16,7 +16,7 @@ class IniList{
 
     addCharacter(){
 
-        this.characterList.list.unshift(new Character(this.newCharacterName, this.newCharacterIni) );
+        this.characterList.list.push(new Character(this.newCharacterName, this.newCharacterIni) );
         this.newCharacterName = '';
         this.newCharacterIni = undefined;
 
@@ -78,8 +78,14 @@ class IniList{
     }
 
     movecharacter($event){
+        //execute next over event
+
+        if ($event.key === 'Enter'){
+            this.nextCharacter();
+        }
+
         //console.log('on event' + $event);
-        console.log($event);
+       // console.log($event);
         if($event.key==='ArrowUp')
         {
 
@@ -98,12 +104,12 @@ class IniList{
             else return false;
         });
         if(oldselected) {
-            console.log('oldselected= ' + oldselected);
+            //console.log('oldselected= ' + oldselected);
             oldselected.selected = false;
         }
 
         chacarter.selected = true;
-        console.log(chacarter.name +' selected');
+       // console.log(chacarter.name +' selected');
 
     }
 
