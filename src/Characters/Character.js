@@ -1,7 +1,7 @@
 'use strict';
 
 class Character{
-    constructor(name, initiative, hp, statusString){
+    constructor(name, initiative =  Math.floor((Math.random() * 20) + 1) , hp, statusString){
         this.name = name;
         this.initiative = initiative;
         this.hp = hp;
