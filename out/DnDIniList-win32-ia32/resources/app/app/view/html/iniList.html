@@ -1,0 +1,61 @@
+<div class="container-fluid" ng-controller="IniListController as inilistController">
+    <form class="form-group">
+        <div id="testdiv" tabindex="0" ng-keyup="inilistController.inilist.movecharacter($event)">
+            <table class="table table-responsive table-condensed table-hover" ng-init="inilistController.inilist.initFight()">
+                <thead>
+                <tr>
+                    <th ng-repeat="header in inilistController.inilist.getTableHeader()">{{header}}</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr ng-repeat="character in inilistController.inilist.getCharacterList().getCharacterArray()"
+                    ng-class="{success: inilistController.inilist.getCurrentTurnChracter() == character}">
+
+                    <td ng-click="inilistController.inilist.selectCharacter(character)" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" >
+                        <span  ng-show="character.selected" class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        {{character.name}}</td>
+
+                    <td class="col-lg-1 col-md-1 col-sm-1 col-xs-2" >
+                        <span style="color: blue">{{character.initiative}}</span>
+
+                    <td class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
+                        <input type=text class="form-control" ng-model="character.hp" name="a">
+
+                    <td class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+                        <input type="text" class="form-control" ng-model="character.statusString"  name="c">
+                    </td>
+
+                    <td class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+                        <span ng-click="inilistController.inilist.remove(character)" style="color: red"
+                              class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container-fluid">
+
+            <button type="button" ng-click="inilistController.inilist.nextCharacter()" autofocus class="btn btn-success">Next</button>
+            <button type="button" ng-click="inilistController.inilist.finishFight()" class="btn btn-danger">End Fight</button>
+
+        </div>
+
+    </form>
+
+
+    <form class="form-group">
+        <div class="container-fluid">
+
+            <input class="form-control"  type="text" id="addNew"
+                   ng-model="inilistController.inilist.newCharacterName">
+            </input>
+            <input class="form-control" type="number" id="ini" name="ini"
+                   ng-model="inilistController.inilist.newCharacterIni">
+            </input>
+
+            <button type="submit" autofocus ng-click="inilistController.inilist.addCharacter()"
+                    class="btn btn-success">Add</button>
+
+        </div>
+    </form>
+</div>
