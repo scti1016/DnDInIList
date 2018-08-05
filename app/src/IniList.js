@@ -1,12 +1,12 @@
 const CharacterList = require('./Characters/CharacterList');
 const Character = require('./Characters/Character');
 
-class IniList{
+class IniList {
 
-    constructor($scope){
+    constructor($scope) {
         this.$scope = $scope;
         this.characterList = new CharacterList();
-        this.tableheader = {Character:'Character',Ini:'Ini',HP:'HP',Status:'Status',Delete:'Delete'};
+        this.tableheader = { Character: 'Character', Ini: 'Ini', HP: 'TP', hide: 'Verstecken', move_silently: 'Leise bewegen', Status: 'Status', Delete: 'Delete' };
         this.currentTurnCharacter = undefined;
         this.encounterStarted = false;
 
@@ -14,138 +14,114 @@ class IniList{
         this.newCharacterIni = undefined;
     }
 
-    addCharacter(){
-
-        this.characterList.list.push(new Character(this.newCharacterName, this.newCharacterIni) );
+    addCharacter() {
+        this.characterList.list.push(new Character(this.newCharacterName, this.newCharacterIni));
         this.newCharacterName = '';
-        this.newCharacterIni = undefined;
-
     }
 
-    getCharacterList(){
+    getCharacterList() {
         return this.characterList;
     }
 
-    getTableHeader(){
+    getTableHeader() {
         return this.tableheader;
     }
 
-    setCurrentTurnChracter(character){
+    setCurrentTurnChracter(character) {
         this.currentTurnCharacter = character;
     }
 
-    getCurrentTurnChracter(){
+    getCurrentTurnChracter() {
         return this.currentTurnCharacter;
     }
 
-    remove(character){
+    remove(character) {
         const index = this.characterList.list.indexOf(character);
-        this.characterList.list.splice(index,1);
+        this.characterList.list.splice(index, 1);
 
     }
 
-    charUp(){
-        const char = this.characterList.list.find((e)=>{
+    moveCharInList(direction) {
+
+        const char = this.characterList.list.find((e) => {
             if (e.selected) return true;
             else return false;
         });
-        if(this.characterList.list.length === 1)return;
+        if (char == undefined) return;
+
+        if (this.characterList.list.length === 1) return;
         const indexchar = this.characterList.list.indexOf(char);
 
-
-        if(this.characterList.list[indexchar -1] != undefined){
-            const tmpCharacter = this.characterList.list[indexchar -1];
-            this.characterList.list[indexchar -1] = char;
+        if (this.characterList.list[indexchar + direction] != undefined) {
+            const tmpCharacter = this.characterList.list[indexchar + direction];
+            this.characterList.list[indexchar + direction] = char;
             this.characterList.list[indexchar] = tmpCharacter;
-
         }
     }
 
-    chardown(){
-        const char = this.characterList.list.find((e)=>{
-            if (e.selected) return true;
-            else return false;
-        });
-        if(this.characterList.list.length === 1)return;
-        const indexchar = this.characterList.list.indexOf(char);
-        if(this.characterList.list[indexchar +1] != undefined){
+    movecharacter($event) {
 
-            const tmpCharacter = this.characterList.list[indexchar +1];
-            this.characterList.list[indexchar +1] = char;
-            this.characterList.list[indexchar] = tmpCharacter;
-
-        }
-    }
-
-    movecharacter($event){
-        //execute next over event
-
-        if ($event.key === 'Enter'){
+        if ($event.key === 'Enter') {
             this.nextCharacter();
         }
 
-        //console.log('on event' + $event);
-       // console.log($event);
-        if($event.key==='ArrowUp')
-        {
-
-            this.charUp()
-        }
-        if($event.key==='ArrowDown')
-        {
-            this.chardown()
+        if ($event.key === 'ArrowUp') {
+            this.moveCharInList(-1);
         }
 
+        if ($event.key === 'ArrowDown') {
+            this.moveCharInList(1);
+        }
     }
 
-    selectCharacter(chacarter){
-        const oldselected = this.characterList.list.find((e)=>{
+    selectCharacter(character) {
+        const oldselected = this.characterList.list.find((e) => {
             if (e.selected) return true;
             else return false;
         });
-        if(oldselected) {
-            //console.log('oldselected= ' + oldselected);
+
+        if (oldselected) {
             oldselected.selected = false;
         }
 
-        chacarter.selected = true;
-       // console.log(chacarter.name +' selected');
-
+        character.selected = true;
     }
 
-    nextCharacter(){
+    nextCharacter() {
         let i = this.getCharacterList().list.indexOf(this.getCurrentTurnChracter());
-        if (i+1 === this.getCharacterList().list.length){
+        if (i + 1 === this.getCharacterList().list.length) {
             i = 0;
-        }else {i+=1;}
+        }
+        else i += 1;
+
         this.setCurrentTurnChracter(this.characterList.list[i]);
         this.decrementValues(this.getCurrentTurnChracter());
-
     }
-    decrementValues(currChar){
+
+    decrementValues(currChar) {
         let statusText = currChar.statusString;
         if (statusText == null) return;
         const numbersToDecrement = statusText.match(/#-*[0-9]+/g);
         if (numbersToDecrement == null) return;
         let decrementedNumbers = [];
         let numberPositions = [];
-        for (let number of numbersToDecrement){
-           numberPositions.push(statusText.indexOf(number));
+        for (let number of numbersToDecrement) {
+            numberPositions.push(statusText.indexOf(number));
         }
-        for (let numberString of numbersToDecrement){
+        for (let numberString of numbersToDecrement) {
             numberString = numberString.substring(1);
-            let decrementedNumber = ((parseInt(numberString))-1);
-            decrementedNumber = '#'+decrementedNumber;
+            let decrementedNumber = ((parseInt(numberString)) - 1);
+            decrementedNumber = '#' + decrementedNumber;
             decrementedNumbers.push(decrementedNumber)
         }
 
-        decrementedNumbers.forEach( (decrementedNumber, i) =>{
-           statusText = statusText.replace(numbersToDecrement[i], decrementedNumber);
+        decrementedNumbers.forEach((decrementedNumber, i) => {
+            statusText = statusText.replace(numbersToDecrement[i], decrementedNumber);
         });
         this.getCurrentTurnChracter().statusString = statusText;
     }
 
-    finishFight(){
+    finishFight() {
         this.$scope.$emit('fightEnd');
     }
 }
