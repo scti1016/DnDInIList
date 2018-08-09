@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const CharacterList = require('./Characters/CharacterList');
 const Character = require('./Characters/Character');
 
@@ -26,9 +28,8 @@ class CharacterListUserPrompt{
 
     isFormValid(){
 
-        return (this.currentCharacter.name &&(
-            this.currentCharacter.initiative ||
-            this.currentCharacter.initiative === 0 ))
+        return (this.currentCharacter.name
+            && (this.currentCharacter.initiative || this.currentCharacter.initiative === 0 ))
     }
 
     isFinishValid(){
@@ -39,12 +40,26 @@ class CharacterListUserPrompt{
         if (this.isFormValid()) {
             this.characterList.addCharacter(this.currentCharacter);
             this.currentCharacter = new Character();
-
         }
+    }
+
+    _logFight(){
+       const savePath = path.join(__dirname, '..', '..', 'Old_Fights') 
+       if (!fs.existsSync(savePath)){
+           fs.mkdirSync(savePath);
+           console.log('Created ' + savePath);
+       }
+       fs.writeFileSync(path.join(savePath, 'Fight_' + Date.now() + '.txt'), this.characterList.serializeCharacterList(true))
+
     }
 
     finish(){
         if (this.isFinishValid()) {
+            try {
+            this._logFight()
+            }
+            catch(e) {console.log('Could not save fight. Reason: ' + e) }
+
             this.characterList.sortInitiative();
             this.$scope.$emit('fight', this.characterList.list);
         }

@@ -38,7 +38,6 @@ class IniList {
     remove(character) {
         const index = this.characterList.list.indexOf(character);
         this.characterList.list.splice(index, 1);
-
     }
 
     moveCharInList(direction) {
